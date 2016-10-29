@@ -1,0 +1,45 @@
+clear; clc; close all;
+
+% boundaries
+% M = 1; % x boundary
+% L = 1; % y boundary
+
+x = linspace(0,1,100);
+y = linspace(0,L,100);
+
+% number of terms
+n = 10;
+
+% function
+f = zeros(length(y),1);
+for i = 1 : length(y)
+    
+    f(i) = y(i)*(1-y(i));
+    
+end
+
+%terms
+u = zeros(length(x),length(y), n);
+for i = 1 : n
+    
+    for j = 1 : length(x)
+        
+        %define Xn
+        Xn = cosh((n+1)*pi*(x(j)-1));
+        
+        for k = 1 : length(y)
+            
+            %define Yn
+            Yn = sin(pi*y(k)*(n+1));
+            
+            %define Cn
+            Cn = int(f*sin((n+1)*pi*y), y, 0, 1);
+            
+            % calculate u
+            u(j,k,n) = Xn*Yn*Cn;
+            
+        end
+        
+    end
+    
+end
