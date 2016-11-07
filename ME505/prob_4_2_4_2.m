@@ -4,8 +4,8 @@ tic
 % M = 1; % x boundary
 % L = 1; % y boundary
 
-x = linspace(0,1,40);
-y = linspace(0,1,40);
+x = linspace(0,1,20);
+y = linspace(0,1,20);
 
 % number of terms
 n_terms = 10;
@@ -19,8 +19,36 @@ Cn = zeros(length(y),1);
 top = Cn;
 bot = Cn;
 
-eigen_values = solve_eigen_values(n_terms);
+lambda = .001 : 0.00001 : 500;
 
+function_value = zeros(length(lambda),1);
+for i = 1 : length(lambda)
+    
+    function_value(i) = sin(lambda(i)) + lambda(i)*cos(lambda(i));
+    
+end
+
+lambda_guess = zeros(n_terms,1);
+ng = 1;
+
+for i = 2 : length(function_value)
+    
+    if function_value(i) < 0 && function_value(i-1) > 0 %goes pos to neg
+        lambda_guess(ng) = lambda(i);
+        ng = ng + 1;
+    end
+    
+    if function_value(i) > 0 && function_value(i-1) < 0 %goes neg to pos
+        lambda_guess(ng) = lambda(i);
+        ng = ng + 1;
+    end
+    
+end
+
+lambda_guess = lambda_guess(1:n_terms,1);
+
+%could use FZERO, but this is good enough
+eigen_values = lambda_guess;
 
 for n = 0 : n_terms-1
     
@@ -59,5 +87,5 @@ for n = 0 : n_terms-1
 end
 toc
 surf(x,y,u);
-xlabel('x');
-ylabel('y');
+xlabel('y');
+ylabel('x');

@@ -7,7 +7,7 @@ lambda = .001 : 0.00001 : 500;
 function_value = zeros(length(lambda),1);
 for i = 1 : length(lambda)
     
-    function_value(i) = lambda(i)*sin(lambda(i))+cos(lambda(i));
+    function_value(i) = sin(lambda(i)) + lambda(i)*cos(lambda(i));
     
 end
 
