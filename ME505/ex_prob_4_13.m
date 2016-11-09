@@ -7,11 +7,11 @@ tic
 L = 6;
 M = 4;
 
-n_terms = 4;
+n_terms = 10;
 
 
-x = 0 : L/10.0 : L;
-y = 0 : M/10.0 : M;
+x = 0 : L/5.0 : L;
+y = 0 : M/5.0 : M;
 
 %Poisson Equation
 X_m = zeros(n_terms,1);
@@ -136,5 +136,5 @@ toc
 
 surf(x,y,v);
 xlabel('x');
-ylabel('x');
+ylabel('y');
 
