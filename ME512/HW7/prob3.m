@@ -2,14 +2,18 @@ clear; clc; close all;
 
 R = 0.3; % m
 omega = 2*pi; % rad/s
-nu = 1*10^-6;
+nu = 1.004*10^-6;
 
-r = 0 : 0.001 : R;
+r = 0 : 0.01 : R;
 %t = 0 : 500 : 50000;
-%t = 360;
-t= 4500;
+%t = 450;
+t = [450,3600,1000000];
 
-n_terms = 10;
+that = t*nu/R^2;
+
+rhat = r/R;
+
+n_terms = 20;
 
 lambda = 0.0001 : 0.0001 : 100;
 
@@ -46,12 +50,12 @@ for i = 1 : length(t)
         
         for n = 0 : n_terms-1
             
-            term(n+1) = 2*besselj(1,l_n(n+1)*r(j)/R)/(l_n(n+1)*besselj(0,l_n(n+1)))...
-                *exp(-l_n(n+1)^2.0*t(i)*nu/R^2);
+            term(n+1) = 2*besselj(1,l_n(n+1)*rhat(j))/(l_n(n+1)*besselj(0,l_n(n+1)))...
+                *exp(-l_n(n+1)^2.0*that(i));
             
         end
         
-        v(j,i) = r(j) + sum(term); 
+        v(j,i) = rhat(j) + sum(term); 
         
     end
     
@@ -59,4 +63,11 @@ end
 
 v_theta = R*omega*v;
 
-plot(r,v(:,1));
+hold on
+plot(r,v(:,1),'--');
+plot(r,v(:,2),'--x');
+plot(r,v(:,3));
+legend('t = 450s','t = 3600s','steady-state');
+xlabel('radial position (m)');
+ylabel('V_{normalized} (m/s)');
+

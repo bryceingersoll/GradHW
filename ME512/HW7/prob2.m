@@ -12,14 +12,15 @@ nu = mu/rho;
 umax = 1.0;
 
 %t = 0 : 0.01 : 1.0;
-t = 100000000000000000;
+%t = 1000;
 
 y = 0 : 0.01 : h;
 
 yhat = y/h;
 ghat = gx*h^2/nu/umax;
-that = t*nu/h^2;
-
+%that = t*nu/h^2;
+that = 0.2365;
+t = that*h^2/nu;
 n_terms = 10;
 
 uhat = zeros(length(y),1);
